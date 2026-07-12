@@ -1,0 +1,5 @@
+[10:29:39.859 [Test worker] INFO raftkv.core.RaftNode -- Starting node 1 in state FOLLOWER
+|10:29:39.979 [pool-1-thread-1] INFO raftkv.core.RaftNode -- Election timeout on node 1, term 0, transitioning to CANDIDATE
+a10:29:39.981 [pool-1-thread-1] INFO raftkv.core.RaftNode -- Node 1 starting election for term 1
+^10:29:39.983 [pool-1-thread-1] INFO raftkv.core.RaftNode -- Node 1 elected LEADER for term 1
+I10:29:40.011 [Test worker] INFO raftkv.core.RaftNode -- Stopping node 1
