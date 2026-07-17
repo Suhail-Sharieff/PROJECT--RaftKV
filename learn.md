@@ -1,20 +1,3 @@
-# Learning Guide: From DSA to Distributed Systems
-
-Welcome! If you have only used Java for solving Data Structures and Algorithms (DSA) problems, transitioning to a multi-module distributed systems project can feel overwhelming. 
-
-Don't worry. This guide is designed specifically for you. It explains the project's tooling, directory structure, and features, and gives you a step-by-step roadmap to read and understand the codebase.
-
----
-
-## 1. What is a "Project" in Java (vs. DSA)?
-
-When you do DSA, you usually write code in a single file (like `Solution.java`) and run it directly. 
-In real-world software development:
-1. **Dependencies**: We use external libraries written by other people (like logging tools or networking frameworks).
-2. **Modularization**: We split our code into separate logical pieces (called **modules**) to keep it clean and maintainable.
-3. **Compilation**: We need a tool to fetch libraries, compile multiple files, link them, run tests, and package the output.
-
-This is where a **Build Tool** comes in.
 
 ### What is Gradle?
 **Gradle** is a build tool. It acts as the manager of your project. 
