@@ -124,7 +124,7 @@ public class RaftNode {
         NodeState oldState = role;
         role = NodeState.CANDIDATE;
         currentTerm++;
-        votedFor = nodeId;
+        votedFor = nodeId;//votes itself first
         votesReceived.clear();
         votesReceived.add(nodeId);
 
