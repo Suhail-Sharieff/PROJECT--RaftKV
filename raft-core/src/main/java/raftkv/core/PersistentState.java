@@ -8,15 +8,16 @@ import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+//how state is saved to disk
 public class PersistentState {
     private static final Logger logger = LoggerFactory.getLogger(PersistentState.class);
 
-    private final File metadataFile;
-    private final File logFile;
+    private final File metadataFile;//just contains 2 things: term & votedFor
+    private final File logFile;//contains log entries
 
     private long currentTerm = 0;
     private int votedFor = -1;
-    private final List<LogEntry> log = new ArrayList<>();
+    private final List<LogEntry> log = new ArrayList<>();//again this is just used as a cache for the Apis this class exposes, so hat we dont have to read from disk again and again
 
     public PersistentState(String dataDir) {
         File dir = new File(dataDir);
@@ -41,14 +42,18 @@ public class PersistentState {
     }
 
     public synchronized void saveMetadata(long term, int votedFor) {
+        //1> save in memory
         this.currentTerm = term;
         this.votedFor = votedFor;
+        //2> save in disk
+        // We write to a temporary file first. If a crash happens mid write, only the temp file is corrupted; the original metadata.state remains
+        //  perfectly safe and intact.
         File tempFile = new File(metadataFile.getParentFile(), "metadata.state.tmp");
         try (PrintWriter writer = new PrintWriter(new FileWriter(tempFile))) {
             writer.println("term=" + term);
             writer.println("votedFor=" + votedFor);
             writer.flush();
-            Files.move(tempFile.toPath(), metadataFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);
+            Files.move(tempFile.toPath(), metadataFile.toPath(), StandardCopyOption.REPLACE_EXISTING, StandardCopyOption.ATOMIC_MOVE);// Once the temp file is fully written and closed, we tell the operating system to swap/rename metadata.state.tmp to metadata.state.Either the swap succeeds 100%, or nothing happens at all (if power cuts out during the move). There is no in-between state where the destination file is left partially overwritten or corrupted. This pattern is the exact same pattern used by production databases (like SQLite or PostgreSQL) to guarantee that they never wake up with corrupted configuration files after a sudden crash!
         } catch (IOException e) {
             logger.error("Failed to persist metadata state", e);
         }

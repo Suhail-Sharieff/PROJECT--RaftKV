@@ -1,6 +1,6 @@
 <mxfile host="Electron">
   <diagram name="Page-1" id="qUxg2UZ97baMRfVI6DqG">
-    <mxGraphModel dx="2465" dy="1402" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2545" dy="481" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -339,6 +339,9 @@
         <mxCell id="qWLn5vZDrTnf9ysT2-j--32" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--10" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Comic Sans MS;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;fontStyle=0" target="qWLn5vZDrTnf9ysT2-j--27">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-2" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--10" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="UtUBCHwfkQPxxQouWg8_-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontStyle=0" value="Other server&lt;div&gt;(if it hasnt voted for anyone, votefFor=-1)&lt;/div&gt;" vertex="1">
           <mxGeometry height="70" width="140" x="1050" y="660" as="geometry" />
         </mxCell>
@@ -351,11 +354,14 @@
         <mxCell id="qWLn5vZDrTnf9ysT2-j--29" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--27" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Comic Sans MS;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;fontStyle=0" target="qWLn5vZDrTnf9ysT2-j--28" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-5" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--27" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="UtUBCHwfkQPxxQouWg8_-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--27" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontStyle=0" value="req.term == currTerrm" vertex="1">
           <mxGeometry height="60" width="140" x="1360" y="690" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--28" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontStyle=0" value="req.lastLogIndex &amp;lt; currLastLogIndex" vertex="1">
-          <mxGeometry height="60" width="170" x="1550" y="690" as="geometry" />
+          <mxGeometry height="60" width="170" x="1560" y="670" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--30" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--10" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.014;entryY=0.598;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Comic Sans MS;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;fontStyle=0" target="qWLn5vZDrTnf9ysT2-j--25">
           <mxGeometry relative="1" as="geometry" />
@@ -376,19 +382,16 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--41" parent="1" style="shape=step;perimeter=stepPerimeter;whiteSpace=wrap;html=1;fixedSize=1;fontFamily=Comic Sans MS;fontStyle=0" value="VOTE GRANTED" vertex="1">
-          <mxGeometry height="80" width="160" x="920" y="780" as="geometry" />
-        </mxCell>
-        <mxCell id="qWLn5vZDrTnf9ysT2-j--42" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--10" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=1.006;entryY=0.582;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--41">
-          <mxGeometry relative="1" as="geometry" />
+          <mxGeometry height="80" width="160" x="950" y="780" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--48" parent="1" style="points=[];aspect=fixed;html=1;align=center;shadow=0;dashed=0;fillColor=#FF6A00;strokeColor=none;shape=mxgraph.alibaba_cloud.user_feedback_02;" value="" vertex="1">
-          <mxGeometry height="50.099999999999994" width="43.199999999999996" x="2970" y="1270" as="geometry" />
+          <mxGeometry height="50.099999999999994" width="43.199999999999996" x="3420" y="1260" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--58" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--54" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--57" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--54" parent="1" style="whiteSpace=wrap;html=1;" value="&lt;span style=&quot;text-align: left;&quot;&gt;./gradlew :raft-client:run --args=&quot;1=localhost:8001,2=localhost:8002,3=localhost:8003 put mykey myvalue&lt;/span&gt;" vertex="1">
-          <mxGeometry height="60" width="650" x="2825" y="1410" as="geometry" />
+          <mxGeometry height="60" width="650" x="3275" y="1400" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--55" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--48" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.478;entryY=0.029;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--54">
           <mxGeometry relative="1" as="geometry" />
@@ -399,13 +402,13 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--57" parent="1" style="whiteSpace=wrap;html=1;" value="Build Map&amp;lt;Integer,String&amp;gt;serverMap based on args passed&lt;div&gt;(&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;key is the node Id and String is the IP address of the node server we wanna query&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;)&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="100" width="195" x="3160" y="1530" as="geometry" />
+          <mxGeometry height="100" width="195" x="3610" y="1520" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--65" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--59" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--63">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--59" parent="1" style="whiteSpace=wrap;html=1;" value="Initialize ManagedChannel&lt;div&gt;(manages complete lifecycle of a TCP connection of the client and server, supporting connection retries, graceful shutdown and initilizaion)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Channel needs IP address of the server we wanna connect to, get it from server map nitialized in above step&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;color: rgb(199, 125, 187); font-family: &amp;quot;JetBrains Mono&amp;quot;, monospace; font-size: 10.5pt; background-color: rgb(25, 26, 28);&quot;&gt;channel=new ManagedChannel(&lt;/span&gt;serverAddess,port)&lt;/div&gt;" vertex="1">
-          <mxGeometry height="190" width="240" x="2820" y="1670" as="geometry" />
+          <mxGeometry height="190" width="240" x="3270" y="1660" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--60" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--57" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.519;entryY=0.014;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--59">
           <mxGeometry relative="1" as="geometry" />
@@ -419,14 +422,14 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--63" parent="1" style="whiteSpace=wrap;html=1;" value="Initiliza the KVServiceGrpcBlockingStub&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;it is reponsible for making network calls over this persisitent channel, its blocking because the thread keeps connection alive unless the response arrives from the clinet under defined timeout&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div style=&quot;background-color:#191a1c;color:#bcbec4&quot;&gt;&lt;pre style=&quot;font-family:&#39;JetBrains Mono&#39;,monospace;font-size:10.5pt;&quot;&gt;&lt;span style=&quot;color:#c77dbb;&quot;&gt;blockingStub=new &lt;br&gt;&lt;/span&gt;KVServiceGrpc.&lt;span style=&quot;font-size: 10.5pt; white-space: normal; font-style: italic;&quot;&gt;newBlockingStub&lt;/span&gt;&lt;span style=&quot;font-size: 10.5pt; white-space: normal;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;font-size: 10.5pt; white-space: normal; color: rgb(199, 125, 187);&quot;&gt;channel&lt;/span&gt;&lt;span style=&quot;font-size: 10.5pt; white-space: normal;&quot;&gt;)&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="200" width="320" x="3140" y="1820" as="geometry" />
+          <mxGeometry height="200" width="320" x="3590" y="1810" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--92" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--66" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--78">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="2890" y="2220" />
-              <mxPoint x="2690" y="2220" />
-              <mxPoint x="2690" y="2415" />
+              <mxPoint x="3340" y="2210" />
+              <mxPoint x="3140" y="2210" />
+              <mxPoint x="3140" y="2405" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -436,22 +439,22 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--66" parent="1" style="whiteSpace=wrap;html=1;" value="READY TO MAKE REQUEST&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;GET/PUT&lt;/div&gt;" vertex="1">
-          <mxGeometry height="80" width="120" x="2840" y="2070" as="geometry" />
+          <mxGeometry height="80" width="120" x="3290" y="2060" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--79" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--72" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--78">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--72" parent="1" style="whiteSpace=wrap;html=1;" value="Choose any one server from map, make request to it" vertex="1">
-          <mxGeometry height="90" width="186.8" x="3263.2" y="2200" as="geometry" />
+          <mxGeometry height="90" width="186.8" x="3713.2" y="2190" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--74" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--72" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;innerLoopWaypoints=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.635;entryY=-0.02;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--72">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="3356.83" y="2200" />
-              <mxPoint x="3396.83" y="2200" />
-              <mxPoint x="3396.83" y="2090" />
-              <mxPoint x="3290" y="2090" />
-              <mxPoint x="3290" y="2188.17" />
+              <mxPoint x="3806.83" y="2190" />
+              <mxPoint x="3846.83" y="2190" />
+              <mxPoint x="3846.83" y="2080" />
+              <mxPoint x="3740" y="2080" />
+              <mxPoint x="3740" y="2178.17" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -464,35 +467,35 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--78" parent="1" style="whiteSpace=wrap;html=1;" value="Raft server&lt;div&gt;with&amp;nbsp;&lt;span style=&quot;color: rgb(199, 125, 187); font-family: &amp;quot;JetBrains Mono&amp;quot;, monospace; font-size: 10.5pt; background-color: rgb(25, 26, 28);&quot;&gt;currentServerId&lt;/span&gt;&lt;/div&gt;" vertex="1">
-          <mxGeometry height="70" width="170" x="2950" y="2380" as="geometry" />
+          <mxGeometry height="70" width="170" x="3400" y="2370" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--83" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--80" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--82" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--80" parent="1" style="whiteSpace=wrap;html=1;" value="IS A LEADER" vertex="1">
-          <mxGeometry height="60" width="120" x="2850" y="2530" as="geometry" />
+          <mxGeometry height="60" width="120" x="3300" y="2520" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--81" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--78" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.392;entryY=-0.017;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--80">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--82" parent="1" style="whiteSpace=wrap;html=1;" value="Request Success&amp;nbsp;&lt;div&gt;ACK&lt;/div&gt;&lt;div&gt;success=true&lt;/div&gt;" vertex="1">
-          <mxGeometry height="60" width="120" x="2885" y="2700" as="geometry" />
+          <mxGeometry height="60" width="120" x="3335" y="2690" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--87" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--84" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--86" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--84" parent="1" style="whiteSpace=wrap;html=1;" value="NOT A&amp;nbsp; LEADER" vertex="1">
-          <mxGeometry height="60" width="120" x="3090" y="2550" as="geometry" />
+          <mxGeometry height="60" width="120" x="3540" y="2540" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--86" parent="1" style="whiteSpace=wrap;html=1;" value="return the current leader id" vertex="1">
-          <mxGeometry height="60" width="120" x="3296.6" y="2520" as="geometry" />
+          <mxGeometry height="60" width="120" x="3746.6" y="2510" as="geometry" />
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--90" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--66" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.003;entryY=0.646;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="qWLn5vZDrTnf9ysT2-j--72">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="2890" y="2258.1" />
+              <mxPoint x="3340" y="2248.1" />
             </Array>
-            <mxPoint x="3020" y="2250" as="sourcePoint" />
+            <mxPoint x="3470" y="2240" as="sourcePoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--96" connectable="0" parent="qWLn5vZDrTnf9ysT2-j--90" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" value="&lt;div style=&quot;background-color:#191a1c;color:#bcbec4&quot;&gt;&lt;pre style=&quot;font-family:&#39;JetBrains Mono&#39;,monospace;font-size:10.5pt;&quot;&gt;&lt;span style=&quot;color:#c77dbb;&quot;&gt;currentServerId == -1&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;" vertex="1">
@@ -503,15 +506,68 @@
         <mxCell id="qWLn5vZDrTnf9ysT2-j--99" edge="1" parent="1" source="qWLn5vZDrTnf9ysT2-j--86" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--59">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="3740" y="2550" />
-              <mxPoint x="3740" y="1750" />
+              <mxPoint x="4190" y="2540" />
+              <mxPoint x="4190" y="1740" />
             </Array>
-            <mxPoint x="3090" y="1750" as="targetPoint" />
+            <mxPoint x="3540" y="1740" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="qWLn5vZDrTnf9ysT2-j--101" connectable="0" parent="qWLn5vZDrTnf9ysT2-j--99" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" value="reinitialize chaneel, reconnect to new server" vertex="1">
           <mxGeometry relative="1" x="-0.4439" y="39" as="geometry">
             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-1" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontStyle=0" value="req.term &amp;gt; currTerrm" vertex="1">
+          <mxGeometry height="60" width="140" x="1320" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-3" edge="1" parent="1" source="UtUBCHwfkQPxxQouWg8_-1" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--41">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-6" edge="1" parent="1" source="UtUBCHwfkQPxxQouWg8_-4" style="edgeStyle=orthogonalEdgeStyle;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=classic;" target="qWLn5vZDrTnf9ysT2-j--41">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1770" y="790" />
+              <mxPoint x="1770" y="830" />
+              <mxPoint x="1760" y="830" />
+              <mxPoint x="1760" y="870" />
+              <mxPoint x="1130" y="870" />
+              <mxPoint x="1130" y="820" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-7" connectable="0" parent="UtUBCHwfkQPxxQouWg8_-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;" value="&lt;b&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;oher server transistions to FOLLOWER + sets votedFor=-1 ie StepDown()&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry relative="1" x="0.0984" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-4" parent="1" style="whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fontStyle=0" value="req.lastLogIndex &amp;gt; currLastLogIndex" vertex="1">
+          <mxGeometry height="60" width="170" x="1540" y="760" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-8" parent="1" style="whiteSpace=wrap;html=1;" value="&lt;div&gt;&amp;lt;&amp;lt;enum&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;NodeState&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;FOLLOWER&lt;/div&gt;&lt;div&gt;CANDIDATE&lt;/div&gt;&lt;div&gt;LEADER&lt;/div&gt;" vertex="1">
+          <mxGeometry height="90" width="120" x="-1335" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-9" parent="1" style="whiteSpace=wrap;html=1;" value="&lt;div&gt;&amp;lt;&amp;lt;record&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;LogEntry&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ term (long)&lt;/div&gt;&lt;div&gt;+ index (long)&lt;/div&gt;&lt;div&gt;+ command (String)&lt;/div&gt;" vertex="1">
+          <mxGeometry height="100" width="120" x="-1290" y="1120" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-11" parent="1" style="whiteSpace=wrap;html=1;" value="&amp;lt;&amp;lt;class&amp;gt;&amp;gt;&lt;div&gt;RaftLog&lt;/div&gt;&lt;div&gt;(log entries management)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;- List&amp;lt;LogEntries&amp;gt; (handles in memory log entries for fast access)&lt;/div&gt;&lt;div&gt;- PersistentState&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ append(LogEntry) (handles adding new entries at last index and also truncating the invalid log entries) :: void&lt;/div&gt;&lt;div&gt;+ getLastLogEntry() :: LogEntry&lt;/div&gt;" vertex="1">
+          <mxGeometry height="250" width="220" x="-1020" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-12" edge="1" parent="1" source="UtUBCHwfkQPxxQouWg8_-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.359;entryY=1.011;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=diamond;endFill=1;" target="UtUBCHwfkQPxxQouWg8_-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-13" parent="1" style="whiteSpace=wrap;html=1;" value="&lt;div&gt;&amp;lt;&amp;lt;class&amp;gt;&amp;gt;&lt;/div&gt;&lt;div&gt;PersistentState&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;div&gt;- List&amp;lt;LogEntries&amp;gt; (handles in memory log entries for fast access)&lt;/div&gt;&lt;div&gt;+ votedFor&lt;/div&gt;&lt;div&gt;+ term&lt;/div&gt;&lt;div&gt;- metadata (file) (stores term &amp;amp; votedFor in disk)&lt;/div&gt;&lt;div&gt;- logFIle (file) (source of truth, stores LogEntries&amp;nbsp; in disk)&amp;nbsp;&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;+ append(LogEntry) (handles adding new entries at last index and also truncating the invalid log entries) :: void&lt;/div&gt;&lt;div&gt;+ getLastLogEntry() :: LogEntry&lt;/div&gt;&lt;/div&gt;&lt;div&gt;+ load() (if server restarts, initializes out in memory datastructures, like List&amp;lt;LogEntries&amp;gt;,votedFor,term reading from disk):: void&lt;/div&gt;" vertex="1">
+          <mxGeometry height="280" width="330" x="-1010" y="1182.5" as="geometry" />
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-14" edge="1" parent="1" source="UtUBCHwfkQPxxQouWg8_-9" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=diamond;endFill=1;" target="UtUBCHwfkQPxxQouWg8_-13">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-1110" y="1120" as="sourcePoint" />
+            <mxPoint x="-911" y="1043" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="UtUBCHwfkQPxxQouWg8_-15" edge="1" parent="1" source="UtUBCHwfkQPxxQouWg8_-13" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.542;exitY=0.007;exitDx=0;exitDy=0;entryX=0.672;entryY=1.002;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=11;fontColor=default;labelBackgroundColor=default;endArrow=diamond;endFill=1;exitPerimeter=0;" target="UtUBCHwfkQPxxQouWg8_-11">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-1090" y="1167" as="sourcePoint" />
+            <mxPoint x="-841" y="1030" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>

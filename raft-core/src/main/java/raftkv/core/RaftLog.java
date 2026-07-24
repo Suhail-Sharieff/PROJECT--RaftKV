@@ -3,8 +3,21 @@ package raftkv.core;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
+//manager class for Logs
 public class RaftLog {
+
+    /*
+
+
+    why do we maintain in memory lists and data structures here? wasn't just PersistenceState class enough??
+
+
+    - coz servers send acknowledgements, votes, heartbeats to other servers, reading from Log file, if we plainly read from Disk(ie using PersistentState class only), it wud really be slow than reading from in memory, coz there are many reads, so v maintain it
+
+
+
+     */
+
     private final List<LogEntry> entries = new ArrayList<>();
     private final PersistentState persistentState;
 
@@ -71,6 +84,7 @@ public class RaftLog {
                 persistentState.appendEntry(entry);
             }
         } else if (entry.index() < entries.size()) {
+            //when it can happen:  If a leader started writing entries but crashed before committing them, those entries are invalid. A new leader is now sending us the correct entries for those same indexes.
             LogEntry existing = entries.get((int) entry.index());
             if (existing.term() != entry.term()) {
                 truncate(entry.index());
@@ -78,7 +92,7 @@ public class RaftLog {
                 if (persistentState != null) {
                     persistentState.appendEntry(entry);
                 }
-            }
+            }//else it's just a duplicate network command, so ignore it
         } else {
             throw new IllegalStateException("Cannot append entry with index " + entry.index() + " to log of size " + entries.size());
         }
