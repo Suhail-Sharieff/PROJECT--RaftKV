@@ -2,8 +2,6 @@
 
 A distributed, fault-tolerant key-value store built in Java 21, implementing the **Raft consensus algorithm** for leader election and log replication. It uses gRPC for high-performance inter-node communication and client operations, with durable state persistence and structured logging.
 
-> [!NOTE]
-> **New to Java projects or Gradle?** Check out our step-by-step [LEARNING_GUIDE.md](file:///C:/Users/suhai/Desktop/kv-claude/LEARNING_GUIDE.md) to understand how the codebase is structured, why we use Gradle, and how to study this project starting from standard DSA knowledge.
 
 This project is structured as a multi-module Gradle project, strictly separating the core consensus algorithm from network and transport concerns. This architecture makes the Raft state machine 100% testable without any mock sockets or RPC channels.
 

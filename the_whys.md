@@ -1,4 +1,4 @@
-# Raft Distributed Systems - Interview Guide
+# Raft Distributed Systems
 
 This guide maps theoretical distributed systems concepts to the implementation details of this repository (`raft-kv-java`), preparing you to discuss and defend your design in system design or backend engineering interviews.
 
