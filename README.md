@@ -63,6 +63,151 @@ flowchart TB
 
 ---
 
+## Working 
+```mermaid
+%%{init: {'theme': 'dark', 'themeVariables': { 'darkMode': true, 'background': '#121212', 'primaryTextColor': '#ffffff', 'lineColor': '#888888' }}}%%
+flowchart TD
+    %% Node Styling Definitions (Dark Mode)
+    classDef clientStyle fill:#01579b,stroke:#4fc3f7,stroke-width:2px,color:#e1f5fe
+    classDef leaderStyle fill:#f57f17,stroke:#fff59d,stroke-width:2px,color:#fffde7
+    classDef followerStyle fill:#1b5e20,stroke:#81c784,stroke-width:2px,color:#e8f5e9
+    classDef candidateStyle fill:#e65100,stroke:#ffb74d,stroke-width:2px,color:#fff3e0
+    classDef databaseStyle fill:#263238,stroke:#90a4ae,stroke-width:2px,color:#eceff1
+    classDef processStyle fill:#4a148c,stroke:#ba68c8,stroke-width:2px,color:#f3e5f5
+    classDef decisionStyle fill:#004d40,stroke:#4db6ac,stroke-width:2px,color:#e0f2f1
+
+    %% Basic Client Server Topology
+    subgraph Topology ["Basic Cluster Topology"]
+        ClientNode["Client"]:::clientStyle -->|<b>gRPC PUT/GET</b>| Server2_Leader["Server 2 (Leader)"]:::leaderStyle
+        Server2_Leader -->|<b>AppendEntries RPC</b>| Server1_Follower["Server 1 (Follower)"]:::followerStyle
+        Server2_Leader -->|<b>AppendEntries RPC</b>| Server3_Follower["Server 3 (Follower)"]:::followerStyle
+    end
+
+    %% State Transitions
+    subgraph State_Transitions ["Server Role Transitions"]
+        FollowerRole["Follower"]:::followerStyle -->|"<b>Election Timeout</b><br>(no leader heartbeat)"| CandidateRole["Candidate"]:::candidateStyle
+        CandidateRole -->|"<b>Election Timeout</b><br>(votes self, increments term, retries)"| CandidateRole
+        CandidateRole -->|"<b>Wins Majority Votes</b>"| LeaderRole["Leader"]:::leaderStyle
+        CandidateRole -->|"<b>Discovers Active Leader</b>"| FollowerRole
+        LeaderRole -->|"<b>Discovers Higher Term</b>"| FollowerRole
+    end
+
+    %% Election Flow
+    subgraph Election_Flow ["Election Flow (Phase 2)"]
+        StartAsFollower["Start as Follower"]:::followerStyle --> RandTimeout["Randomized Timeout (300-600ms)"]:::processStyle
+        RandTimeout --> FollowerToCand["Transition to Candidate"]:::candidateStyle
+        FollowerToCand --> CandVotes["Votes self, increments term, broadcasts RequestVote RPC in parallel"]:::processStyle
+        CandVotes --> EachServer["Each peer processes RequestVote request"]
+
+        EachServer --> WinElec["(A) Candidate Wins Quorum"]
+        EachServer --> AppendArr["(B) Candidate receives AppendEntries from active Leader"]
+        EachServer --> ElecTO["(C) Timeout: Split Vote (No majority)"]
+
+        WinElec --> SendEmpty["Leader broadcasts empty AppendEntries (Heartbeats) to establish authority"]:::leaderStyle
+
+        AppendArr --> TermCompare{"Is Leader Term >= My Term?"}:::decisionStyle
+        TermCompare -->|"<b>No: Reject & continue election</b>"| AppendArr
+        TermCompare -->|"<b>Yes: Step down to Follower</b>"| AgreeLeader["Recognize Leader"]:::followerStyle
+
+        AgreeLeader --> StartAsFollower
+        ElecTO -->|"<b>Start New Election (Term + 1)</b>"| RandTimeout
+    end
+
+    %% Log Replication
+    subgraph Log_Replication ["Log Replication (Phase 3)"]
+        ClientLog["Client PUT request"]:::clientStyle --> LdrNode["Leader Node"]:::leaderStyle
+        LdrNode --> AppendLog[("RaftLog WAL Disk File")]:::databaseStyle
+        AppendLog --> FanOut["Broadcast AppendEntries RPC in parallel"]:::processStyle
+        FanOut --> WaitAcks["Count Follower Acknowledgments"]
+
+        WaitAcks --> NoMaj["Quorum NOT reached"]
+        WaitAcks --> Maj["Quorum Reached (Majority)"]
+
+        NoMaj -->|"<b>Retry (heartbeat loop)</b>"| FanOut
+        Maj --> AdvanceCommit["Leader advances commitIndex"]:::processStyle
+        AdvanceCommit --> ApplySM[("KV Database Map RAM")]:::databaseStyle
+        ApplySM -->|"<b>Return success=true to Client</b>"| ClientLog
+    end
+
+    %% Java/gRPC Client Flow
+    subgraph Client_Logic ["Client Logic & gRPC Redirection (Phase 4)"]
+        CLI["CLI Command:<br>./gradlew :raft-client:run"]:::clientStyle --> BuildMap["Parse server list argument to serverMap"]
+        BuildMap --> InitCh["Initialize ManagedChannel connection"]
+        InitCh --> InitStub["Initialize KVService BlockingStub"]
+        InitStub --> Ready["Ready to execute GET/PUT"]
+
+        Ready --> ChooseSrv{"Is currentServerId set?"}:::decisionStyle
+        ChooseSrv -->|"<b>No (-1)</b>"| PickRandom["Select first server from map"]
+        ChooseSrv -->|"<b>Yes</b>"| ReqSrv["Send request to target server"]
+
+        PickRandom --> ReqSrv
+        ReqSrv -->|"<b>Network Timeout / Error</b>"| TryNext["Try next server in map"]
+        TryNext --> InitCh
+
+        ReqSrv --> CheckLdr{"Is server the Leader?"}:::decisionStyle
+        CheckLdr -->|"<b>Yes (success=true)</b>"| ReqAck["Return success to console"]
+        CheckLdr -->|"<b>No (success=false)</b>"| RetLdrId["Server returns known leaderId"]
+
+        RetLdrId -->|"<b>Update currentServerId & Reconnect</b>"| InitCh
+    end
+
+    %% RaftNode Internal State Machine
+    subgraph RaftNode_Internal ["RaftNode Engine Internal Logic"]
+        RNode["RaftNode Instance"] -->|"<b>start()</b>"| ResetTimer["resetElectionTimer()"]
+        RNode -->|"<b>stop()</b>"| StopTimer["stopElectionTimer() / stopHeartbeatTimer()"]
+
+        ResetTimer --> IsLeaderCheck{"Is node the Leader?"}:::decisionStyle
+        IsLeaderCheck -->|"<b>Yes</b>"| DoNothing["Keep sending heartbeats"]
+        IsLeaderCheck -->|"<b>No</b>"| StartTimerSched["Schedule randomized background callback"]
+
+        StartTimerSched -->|"<b>Callback Fired</b>"| RunElection["runElection(): currentTerm++, role=CANDIDATE, votedFor=self"]
+        RunElection --> PersistState[("PersistentState WAL File")]:::databaseStyle
+        PersistState --> SendVotes["Broadcast RequestVote RPCs in parallel"]
+
+        %% Vote Request Logic
+        SendVotes -->|"<b>Receives VoteRequest RPC</b>"| CheckVoteCond{"Evaluate Vote Request"}:::decisionStyle
+        CheckVoteCond -->|"<b>Candidate Term < currentTerm</b>"| RejVote["Reply voteGranted=false"]
+        CheckVoteCond -->|"<b>Candidate Term > currentTerm</b>"| StepDownFollower["stepDown(): term=candidateTerm, votedFor=-1, role=FOLLOWER"]
+
+        StepDownFollower --> VoteAvailable{"Is votedFor empty (-1)<br>or CandidateId?"}:::decisionStyle
+        VoteAvailable -->|"<b>No</b>"| RejVote
+        VoteAvailable -->|"<b>Yes</b>"| LogUpToDate{"Is Candidate log at<br>least as up-to-date?"}:::decisionStyle
+
+        LogUpToDate -->|"<b>No (stale term or shorter index)</b>"| RejVote
+        LogUpToDate -->|"<b>Yes</b>"| AcceptVote["Set votedFor=candidateId, persistState(), resetElectionTimer()"]
+        AcceptVote --> GrantVote["Reply voteGranted=true"]
+
+        %% AppendEntry Logic
+        RNode -->|"<b>Receives AppendEntries RPC</b>"| CheckAppCond{"Evaluate AppendEntries Request"}:::decisionStyle
+        CheckAppCond -->|"<b>Leader Term < currentTerm</b>"| RejApp["Reply success=false<br>(return currentTerm & lastLogIndex)"]
+        CheckAppCond -->|"<b>Leader Term >= currentTerm</b>"| VerifyFollowerRole{"Is role == CANDIDATE<br>or LEADER?"}:::decisionStyle
+
+        VerifyFollowerRole -->|"<b>Yes</b>"| StepDownFollowerApp["stepDown() to Follower"]
+        VerifyFollowerRole -->|"<b>No (already Follower)</b>"| ResetFollowerTimer["resetElectionTimer(), update leaderId"]
+
+        StepDownFollowerApp --> ResetFollowerTimer
+        ResetFollowerTimer --> LogCheck{"Does follower have entry at<br>prevLogIndex matching prevLogTerm?"}:::decisionStyle
+
+        LogCheck -->|"<b>No (Log Mismatch)</b>"| RejApp
+        LogCheck -->|"<b>Yes</b>"| WriteLogEntries["Append new entries to log<br>(overwriting conflicts) & persistState()"]
+
+        WriteLogEntries --> CommitCheck{"Is leaderCommit > commitIndex?"}:::decisionStyle
+        CommitCheck -->|"<b>Yes</b>"| SetFollowerCommit["Set commitIndex = min(leaderCommit, lastNewEntryIndex)"]
+        CommitCheck -->|"<b>No</b>"| ReplyAppSuccess["Reply success=true (return matchIndex)"]
+
+        SetFollowerCommit --> TriggerApply["applyLogEntries(): advance lastApplied,<br>trigger onCommit client callbacks"]
+        TriggerApply --> ReplyAppSuccess
+    end
+
+    %% Subgraph Styling Definitions (Dark Mode)
+    style Topology fill:#1e1e1e,stroke:#546e7a,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10,color:#ffffff
+    style State_Transitions fill:#1e1e1e,stroke:#546e7a,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10,color:#ffffff
+    style Election_Flow fill:#1e1e1e,stroke:#546e7a,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10,color:#ffffff
+    style Log_Replication fill:#1e1e1e,stroke:#546e7a,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10,color:#ffffff
+    style Client_Logic fill:#1e1e1e,stroke:#546e7a,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10,color:#ffffff
+    style RaftNode_Internal fill:#1e1e1e,stroke:#546e7a,stroke-width:2px,stroke-dasharray: 5 5,rx:10,ry:10,color:#ffffff
+```
+
 ### Key Components inside each Node
 
 Each node runs inside its own JVM process (or container) and has four main layers:
