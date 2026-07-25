@@ -9,25 +9,83 @@ This project is structured as a multi-module Gradle project, strictly separating
 
 ## Architecture & Design Decisions
 
+### System Component Diagram
+The system separates transport, consensus, and database concerns. Below is the detailed architecture of a 3-node cluster, showing the internal design of each node and client-leader routing:
+
 ```mermaid
 flowchart TB
-    subgraph cluster [Raft Cluster - 3 nodes]
-        L[Leader]
-        F1[Follower]
-        F2[Follower]
-        L -->|AppendEntries RPC| F1
-        L -->|AppendEntries RPC| F2
-        F1 -->|RequestVote RPC| L
-        F2 -->|RequestVote RPC| L
+    subgraph ClientSpace [Client Application]
+        Client[RaftCliClient]
     end
 
-    C[Client] -->|Put / Get| L
-    C -.->|Get - any node| F1
+    subgraph Node1 [Raft Node 1 - Leader]
+        direction TB
+        Server1[gRPC Server]
+        Core1[RaftNode Engine]
+        Log1[(RaftLog / Disk WAL)]
+        DB1[(KV Database Map)]
+        
+        Server1 <-->|Translate Msg| Core1
+        Core1 <-->|Read / Write| Log1
+        Core1 -->|onCommit| DB1
+    end
 
-    L --> KV1[(In-memory KV store)]
-    F1 --> KV2[(In-memory KV store)]
-    F2 --> KV3[(In-memory KV store)]
+    subgraph Node2 [Raft Node 2 - Follower]
+        direction TB
+        Server2[gRPC Server]
+        Core2[RaftNode Engine]
+        Log2[(RaftLog / Disk WAL)]
+        DB2[(KV Database Map)]
+        
+        Server2 <-->|Translate Msg| Core2
+        Core2 <-->|Read / Write| Log2
+        Core2 -->|onCommit| DB2
+    end
+
+    subgraph Node3 [Raft Node 3 - Follower]
+        direction TB
+        Server3[gRPC Server]
+        Core3[RaftNode Engine]
+        Log3[(RaftLog / Disk WAL)]
+        DB3[(KV Database Map)]
+        
+        Server3 <-->|Translate Msg| Core3
+        Core3 <-->|Read / Write| Log3
+        Core3 -->|onCommit| DB3
+    end
+
+    Client -->|1. PUT / GET| Server1
+    Client -.->|Redirect / Failover| Server2
+    
+    Core1 -->|2. AppendEntries RPC| Server2
+    Core1 -->|2. AppendEntries RPC| Server3
 ```
+
+---
+
+### Key Components inside each Node
+
+Each node runs inside its own JVM process (or container) and has four main layers:
+1. **gRPC Server / Services**: Exposes the remote API contracts. The server listens on `NODE_PORT` for incoming consensus RPCs (`RaftService`) and client requests (`KVService`).
+2. **RaftNode Consensus Engine**: The core state machine governing term counters (`currentTerm`), voting history (`votedFor`), cluster election timers, and peer replication indexes. It is completely isolated from network transport interfaces.
+3. **RaftLog & Disk WAL**: Manages the append-only log entries in memory (for fast reads) and syncs them to stable storage on disk (for recovery) before responding to RPCs.
+4. **State Machine Database (KV Map)**: A local `ConcurrentHashMap` holding the final committed state of the data. Follower queries (GETs) read from this database directly, while writes (PUTs) must be committed by Raft consensus before being executed.
+
+---
+
+### Step-by-Step Request Flow (PUT)
+
+Here is how a write request flows through the architecture:
+1. **Client Submission**: The `RaftCliClient` sends a `PutRequest` over gRPC to what it believes is the leader (e.g. Node 1).
+2. **Leadership Check**: If Node 1 is not the leader, it replies with `success=false` and points to the current leader's ID. The client automatically reconnects and redirects the request. If Node 1 is the leader, it accepts the write.
+3. **Log Append**: The leader calls `RaftNode.clientWrite()`, appending the command (e.g. `PUT key value`) to its `RaftLog` (saved to disk).
+4. **Replication Broadcast**: The leader's consensus engine broadcasts `AppendEntries` RPCs containing the new log entry to all peer nodes (Node 2 and Node 3) in parallel.
+5. **Follower Acknowledgment**: Followers receive the entry, perform consistency checks, write it to their own disk logs, and return `success=true` to the leader.
+6. **Quorum Commit**: Once the leader receives positive acknowledgments from a majority of nodes (quorum), it updates its `commitIndex` and calls `applyLogEntries()`.
+7. **Database Apply & Client Reply**: The leader applies the command to its local KV map, resolves the client's pending future, and returns a successful response to the client.
+8. **Follower Apply**: On the next heartbeat cycle, followers learn of the updated `commitIndex`, run the command on their local database maps, and advance their `lastApplied` index.
+
+---
 
 ### Module Breakdown
 - **`raft-core`**: Contains the pure Raft state machine (`RaftNode`), log management (`RaftLog`), and state storage (`PersistentState`). Has **zero** networking dependencies (no gRPC, no HTTP). It coordinates operations asynchronously via the `RaftNodeListener` interface.
