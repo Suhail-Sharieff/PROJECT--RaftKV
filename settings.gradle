@@ -1,5 +1,0 @@
-rootProject.name = 'raft-kv-java'
-include 'raft-core'
-include 'raft-rpc'
-include 'raft-server'
-include 'raft-client'
