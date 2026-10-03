@@ -10,6 +10,9 @@ repositories {
 val grpcVersion = "1.69.0"
 val protobufVersion = "3.25.5"
 dependencies {
+    // Logging
+    implementation("org.slf4j:slf4j-api:2.0.12")
+    implementation("ch.qos.logback:logback-classic:1.5.3")
     // gRPC & Protobuf runtime dependencies
     implementation("io.grpc:grpc-netty-shaded:$grpcVersion")
     implementation("io.grpc:grpc-protobuf:$grpcVersion")

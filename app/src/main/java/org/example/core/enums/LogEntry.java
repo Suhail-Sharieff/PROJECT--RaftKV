@@ -1,4 +1,4 @@
-package org.example.core.records;
+package org.example.core.enums;
 
 public record LogEntry(long term,int index,String command) {
 }
