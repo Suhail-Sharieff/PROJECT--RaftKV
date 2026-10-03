@@ -11,3 +11,4 @@
   - added protobuf plugins in [build.gradle](./app/build.gradle.kts)
   - ``./gradlew generateProto`` builds all the stub classes for us to use (message stub in [main](./app/build/generated/source/proto/main/java) and services stub in [grpc](./app/build/generated/source/proto/main/grpc)) 
   - defined [NodeState](./app/src/main/java/org/example/core/enums/NodeState.java) and [LogEntry](./app/src/main/java/org/example/core/records/LogEntry.java) which are both base state models
+  - implemented disk and cache save of Log entries in [PersistentState](app/src/main/java/org/example/core/persitence/PersistentState.java), tis class provides us thread safe APIs using synchronized for serving all operations related to Log file management, like appending entries in log file,updating metadata, truncating log file and loading cache values and serving tem upon restart
