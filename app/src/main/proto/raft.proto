@@ -1,0 +1,61 @@
+syntax="proto3";
+
+//election stuff
+//candidates request vote
+message VoteRequest{
+  int32 candidateId=1;//what is my id
+  int64 term=2;//what is my term
+  int64 lastLogTerm=3;//index of the last log entry i hv
+  int64 lastLogIndex=4;//term at which the last log entry was created in my log file
+  //Q: but why do we need both lastLogIndex and lastLogTerm: coz say A asks vote for B, B will first check the lastLogTerm of A and compare with its own term, if its outdated, it rejects, else it checks for lastLogIndex, the longer or higher one is more updated
+}
+message VoteResponse{
+  int64 term=1;//my term
+  bool voteGranted=2;//did i grant vote ?
+}
+message LogEntryProto{//schema of LogEntry
+  int64 term=1;//term at which this entry was appended
+  int64 index=2;//index at which this entry was inserted
+  string command=3;//what command, like GET,PUT <K> <V>
+}
+//after win, elected Leader wud send AppendEntries RPC
+message AppendEntriesRequest{
+  int32 leaderId=1;//obviously leader wud only send AppendEntry RPC,
+  int64 term=2;//leader's term
+  int64 prevLogIndex=3;//index of log entry immediately preceding now log entries arrived in me, helps in syncing history of followers with leaders, the follower will check if any entry is present in its log at this index, if not present, reject it, if present, check term matching at this index or not
+  int64 prevLogTerm=4;//term of entry present at prevLogIndex
+  repeated LogEntryProto entries=5;//list/array of commands sent by user
+  int64 leaderCommitIndex=6;//latest index of entry that is commited by leader, the follower can safely commit all entries till tis index by asking leader
+}
+message AppendEntriesResponse{//after leader sends AppendEntriesRequest, the follower wud respond with AppendEntriesResponse
+  int64 term=1;//what is follower's current term
+  bool success=2;//did leader's lastLogTerm and lastLogIndex match with mine and the op was successful?
+  int64 matchIndex=3;//highest log index known to be committed in me(follower)
+}
+
+
+service RaftService{
+  rpc RequestVote(VoteRequest) returns (VoteResponse);
+  rpc AppendEntries(AppendEntriesRequest) returns (AppendEntriesResponse);
+}
+
+message PutRequest{
+  string key=1;
+  string value=2;
+}
+message PutResponse{
+  bool success=1;//was the PUT op successful (then PUT was req to leader itself, if no then see who's leader)?
+  int32 leaderId=2;//the follower(NON leader) upon put sends the client leader ID so client can retry PUT request to right leader only
+}
+message GetRequest{
+  string key=1;
+}
+message GetResponse{
+  bool success=1;//was req made to leader? if yes fetch value else retry to leader
+  string value=2;
+  int32 leaderId=3;
+}
+service PutGetService{
+  rpc Put(PutRequest) returns (PutResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+}
