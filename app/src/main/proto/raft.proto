@@ -1,4 +1,13 @@
+//.proto file always needs to be under /src/main since Protobuf plugin(responsible to build generated classes from .proto file) scans this itself
+
 syntax="proto3";
+
+package raft;
+
+option java_multiple_files = true;//if false it will put all classes into a single RaftProto class
+option java_package = "org.example.core.proto";
+option java_outer_classname = "RaftProto";
+
 
 //election stuff
 //candidates request vote
