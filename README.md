@@ -1,7 +1,7 @@
 # Raft kv
 - just building a consistent & partition tolerant distributed Kv store
 - this cud be used as plugin for databases, instances and many more :)
-## Phase1: impl raft core
+## Layer1: raft core engine
 - so basically this module consists of core algorithm implementation of raft
 - no network stuff included here, pure focus on core raft algo
 - it mainly manages state of node, caching and persisting info
@@ -13,7 +13,8 @@
   - defined [NodeState](./app/src/main/java/org/example/core/enums/NodeState.java) and [LogEntry](./app/src/main/java/org/example/core/enums/LogEntry.java) which are both base state models
   - implemented disk and cache save of Log entries in [PersistentState](app/src/main/java/org/example/core/logManagement/persitence/PersistentState.java), tis class provides us thread safe APIs using synchronized for serving all operations related to Log file management, like appending entries in log file,updating metadata, truncating log file and loading cache values and serving tem upon restart
   - but i dint want the server to directy interact with PersistentState class, so i built another [RaftLog](app/src/main/java/org/example/core/logManagement/RaftLog.java) class, this will be used by server to manage logs instead of persistent state class directly, also it provides multiple additional low level APIs on log entries
-## Phase2: timers and network interfaces
+## Layer2: timers and network interfaces
 - so basically till now we just have built state parameters that each node will have, ie metadata and node log entries
 - but this node also needs to conduct an election upon election timeout and listen to heartbeats, so now we need to make it run a timer internally for election purposes
+- implemented [ElectionTimer](app/src/main/java/org/example/core/timer/ElectionTimer.java), it provides reset and stop APIs, reset wud start callback process provided during object creation in background at randomized time intervals
 - 
