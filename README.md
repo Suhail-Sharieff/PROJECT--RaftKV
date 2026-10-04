@@ -17,4 +17,4 @@
 - so basically till now we just have built state parameters that each node will have, ie metadata and node log entries
 - but this node also needs to conduct an election upon election timeout and listen to heartbeats, so now we need to make it run a timer internally for election purposes
 - implemented [ElectionTimer](app/src/main/java/org/example/core/timer/ElectionTimer.java), it provides reset and stop APIs, reset wud start callback process provided during object creation in background at randomized time intervals
-- 
+- defined all callbacks in [RaftNodeListener.java](app/src/main/java/org/example/core/listeners/RaftNodeListener.java) interface, that wud be implemented by node itself and wud hv logic of what callbacks must do
