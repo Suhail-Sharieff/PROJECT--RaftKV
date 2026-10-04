@@ -1,4 +1,4 @@
-package org.example.core.persitence;
+package org.example.core.logManagement.persitence;
 //so basically v know that we store LogEntries into a WAL file that needs to be persistent so that it cud be recovered upon node shutdown, so this class is responsible for storing LogEntries into persistent disk storage
 
 
@@ -85,7 +85,7 @@ public class PersistentState {
     }
 
     //so when some leader wins and sends heartbeats, or this node votes for someone, this node needs to update its metaData in both cache and disk
-    synchronized void updateMetadata(long newTerm,int newVotedFor){
+    public synchronized void updateMetadata(long newTerm,int newVotedFor){
         //update in cache
         this.currentTerm=newTerm;
         this.votedFor=newVotedFor;
@@ -104,7 +104,7 @@ public class PersistentState {
         }
     }
     //when leader asks to append new entry
-    synchronized void appendNewEntry(LogEntry newEntry){
+    public synchronized void appendNewEntry(LogEntry newEntry){
         //add in cache
         logEntries.add(newEntry);
         //persist in disk
@@ -118,7 +118,7 @@ public class PersistentState {
 
 
     //sometimes due to inconsistencies the leader may want this node to delete some troublesome log entries, tis method handles tat
-    public synchronized void truncateLog(long fromIndex) {
+    public synchronized void truncateLogs(long fromIndex) {
         if (fromIndex <= 0) return;
 
         while (!logEntries.isEmpty() && logEntries.getLast().index() >= fromIndex) {
