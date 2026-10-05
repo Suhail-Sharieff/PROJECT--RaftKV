@@ -1,4 +1,13 @@
-# Raft kv
+<p align="center">
+  <img src="app/src/main/resources/logo.png" alt="Raft KV Logo" width="250">
+</p>
+
+<h1 align="center">Raft KV</h1>
+
+<p align="center">
+  Consistent & partition-tolerant distributed key-value store
+</p>
+
 - just building a consistent & partition tolerant distributed Kv store
 - this cud be used as plugin for databases, instances and many more :)
 ## Layer1: raft core engine
