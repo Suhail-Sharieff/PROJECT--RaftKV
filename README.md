@@ -28,4 +28,7 @@
 - implemented [ElectionTimer](app/src/main/java/org/example/core/timer/ElectionTimer.java), it provides reset and stop APIs, reset wud start callback process provided during object creation in background at randomized time intervals
 - defined all callbacks in [RaftNodeListener.java](app/src/main/java/org/example/core/listeners/RaftNodeListener.java) interface, that wud be implemented by node itself and wud hv logic of what callbacks must do
 ## Layer 3: core network classes
-- defined 
+- defined all network related Req/Res parameters like [AppendEntriesRequest](./app/src/main/java/org/example/core/netwrokParams/AppendEntriesRequest.java) for heartbeats, [AppendEntriesResponse](app/src/main/java/org/example/core/netwrokParams/AppendEntriesResponse.java) for sending ACk for heartbeats by leader, [VoteRequest](app/src/main/java/org/example/core/netwrokParams/VoteRequest.java) for requesting vote and [VoteResponse](app/src/main/java/org/example/core/netwrokParams/VoteResponse.java) for sending confirmation of voting by candidates
+## Layer4: node level orchestration
+- now finally we have [RaftNode](app/src/main/java/org/example/core/RaftNode.java) which is the brain of a node, contains all logic to sendHeartBeats,send and receive votes and appendEntries, NOT on the network, but capturing and applying changes to state machine
+- it also handles calling listener methods as well which were defined in [NodeListener](app/src/main/java/org/example/core/listeners/RaftNodeListener.java) interface, but however NO implementation is handled by this class, it simply invokes the methods, implementation/logic is injected from external server 
