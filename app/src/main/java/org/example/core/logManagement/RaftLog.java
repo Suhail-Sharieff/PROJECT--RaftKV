@@ -15,7 +15,7 @@ import java.util.List;
 public class RaftLog {
     private final List<LogEntry> logEntries=new ArrayList<>();
     private final PersistentState persistentState;
-    RaftLog(PersistentState persistentState){this.persistentState=persistentState;this.logEntries.add(new LogEntry(0,0,""));//v hv inserted some dummy entries so we can get 1 based indexing
+    public RaftLog(PersistentState persistentState){this.persistentState=persistentState;this.logEntries.add(new LogEntry(0,0,""));//v hv inserted some dummy entries so we can get 1 based indexing
     }
     public synchronized int getLastLogIndex(){
         //index of the last log entry inserted

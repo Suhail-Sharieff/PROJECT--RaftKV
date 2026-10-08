@@ -19,12 +19,11 @@ public class ElectionTimer {
     private ScheduledFuture<?>future;//scheduler.schedule(<callback>,<delay>,<timeout>) returns ScheduledFuture, ie the task thats running, so we can cancel it whenever needed
 
 
-    public ElectionTimer(ScheduledExecutorService scheduler, Runnable callback, int minTimeoutMs, int maxTimeoutms, ScheduledFuture<?> future) {
+    public ElectionTimer(ScheduledExecutorService scheduler, Runnable callback, int minTimeoutMs, int maxTimeoutms) {
         this.scheduler = scheduler;
         this.callback = callback;
         this.minTimeoutMs = minTimeoutMs;
         this.maxTimeoutms = maxTimeoutms;
-        this.future = future;
     }
 
     public  synchronized void reset(){
